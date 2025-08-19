@@ -1,0 +1,135 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|c:\\workplace\\adfsa apis\\adfsalabapi\\adfsalabapi\\controllers\\limscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|solutionrelative:adfsalabapi\\controllers\\limscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\adfsalabapi\\models\\labtestrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|solutionrelative:adfsalabapi\\models\\labtestrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\adfsalabapi\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|solutionrelative:adfsalabapi\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\adfsalabapi\\services\\limsservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|solutionrelative:adfsalabapi\\services\\limsservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\adfsalabapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|solutionrelative:adfsalabapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\adfsalabapi\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|solutionrelative:adfsalabapi\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\adfsalabapi\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5DB59813-FC5A-45FB-8A05-0AFDC955AFDB}|AdfsaLabAPI\\AdfsaLabAPI.csproj|solutionrelative:adfsalabapi\\models\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LIMSController.cs",
+              "DocumentMoniker": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Controllers\\LIMSController.cs",
+              "RelativeDocumentMoniker": "AdfsaLabAPI\\Controllers\\LIMSController.cs",
+              "ToolTip": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Controllers\\LIMSController.cs",
+              "RelativeToolTip": "AdfsaLabAPI\\Controllers\\LIMSController.cs",
+              "ViewState": "AgIAAFgBAAAAAAAAAAASwJ4BAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T05:54:33.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LabTestRequest.cs",
+              "DocumentMoniker": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Models\\LabTestRequest.cs",
+              "RelativeDocumentMoniker": "AdfsaLabAPI\\Models\\LabTestRequest.cs",
+              "ToolTip": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Models\\LabTestRequest.cs",
+              "RelativeToolTip": "AdfsaLabAPI\\Models\\LabTestRequest.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAswCoAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T09:09:19.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LIMSServices.cs",
+              "DocumentMoniker": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Services\\LIMSServices.cs",
+              "RelativeDocumentMoniker": "AdfsaLabAPI\\Services\\LIMSServices.cs",
+              "ToolTip": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Services\\LIMSServices.cs",
+              "RelativeToolTip": "AdfsaLabAPI\\Services\\LIMSServices.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAMwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T06:22:14.856Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "AdfsaLabAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "AdfsaLabAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAB8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T05:47:52.789Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "AdfsaLabAPI\\Services\\UserService.cs",
+              "ToolTip": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Services\\UserService.cs",
+              "RelativeToolTip": "AdfsaLabAPI\\Services\\UserService.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAUwBEAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T05:42:18.594Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Users.cs",
+              "DocumentMoniker": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Models\\Users.cs",
+              "RelativeDocumentMoniker": "AdfsaLabAPI\\Models\\Users.cs",
+              "ToolTip": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Models\\Users.cs",
+              "RelativeToolTip": "AdfsaLabAPI\\Models\\Users.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-18T05:25:53.293Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Web.config",
+              "RelativeDocumentMoniker": "AdfsaLabAPI\\Web.config",
+              "ToolTip": "C:\\Workplace\\ADFSA APIs\\AdfsaLabAPI\\AdfsaLabAPI\\Web.config",
+              "RelativeToolTip": "AdfsaLabAPI\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-08-18T05:07:17.128Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
