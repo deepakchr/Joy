@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOTNET_ROOT = "C:\\Program Files\\dotnet"
-        TARGET_SERVER = "DV-ITApps" // Change to your Windows Server
-        APP_PATH = "C:\Applications\ADAFSAAPI"
+        TARGET_SERVER = "DV-ITApps"                  // Your Windows Server
+        APP_PATH = "Applications\\ADAFSAAPI"        // Shared folder on target
     }
 
     stages {
@@ -12,39 +12,39 @@ pipeline {
             steps {
                 git branch: 'main',
                     credentialsId: 'github-creds',
-                    url: 'https://github.com/your-username/your-dotnet-repo.git'
+                    url: 'https://github.com/deepakchr/Joy.git'
             }
         }
 
         stage('Restore') {
             steps {
-                bat 'dotnet restore YourProject.sln'
+                bat 'dotnet restore Joy.sln'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'dotnet build YourProject.sln -c Release'
+                bat 'dotnet build Joy.sln -c Release'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'dotnet test YourProject.sln --no-build'
+                bat 'dotnet test Joy.sln --no-build'
             }
         }
 
         stage('Publish') {
             steps {
-                bat 'dotnet publish YourProject.csproj -c Release -o publish'
+                bat 'dotnet publish Joy.csproj -c Release -o publish'
             }
         }
 
         stage('Deploy') {
             steps {
                 script {
-                    // Copy files to IIS server
                     bat """
+                    echo Copying published files to \\\\${TARGET_SERVER}\\${APP_PATH}...
                     xcopy /Y /E publish\\* \\\\${TARGET_SERVER}\\${APP_PATH}
                     """
                 }
@@ -61,3 +61,5 @@ pipeline {
         }
     }
 }
+
+  
