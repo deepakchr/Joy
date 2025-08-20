@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOTNET_ROOT = "C:\\Program Files\\dotnet"
         TARGET_SERVER = "localhost"                     // Change if deploying to a remote server
         APP_PATH = "C:\\Applications\\ADAFSAAPI"       // Deployment folder
     }
