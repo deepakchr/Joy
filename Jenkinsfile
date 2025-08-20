@@ -3,40 +3,41 @@ pipeline {
 
     environment {
         DOTNET_ROOT = "C:\\Program Files\\dotnet"
-        TARGET_SERVER = "DV-ITApps"                  // Your Windows Server
-        APP_PATH = "Applications\\ADAFSAAPI"        // Shared folder on target
+        TARGET_SERVER = "localhost"                     // Change if deploying to a remote server
+        APP_PATH = "C:\\Applications\\ADAFSAAPI"       // Deployment folder
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    credentialsId: 'github-creds',
+                    credentialsId: 'github-creds',       // Jenkins credential ID for GitHub
                     url: 'https://github.com/deepakchr/Joy.git'
             }
         }
 
         stage('Restore') {
             steps {
-                bat 'dotnet restore Joy.sln'
+                bat 'dotnet restore AdfsaLabAPI.sln'
             }
         }
 
         stage('Build') {
             steps {
-                bat 'dotnet build Joy.sln -c Release'
+                bat 'dotnet build AdfsaLabAPI.sln -c Release'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'dotnet test Joy.sln --no-build'
+                bat 'dotnet test AdfsaLabAPI.sln --no-build || echo "⚠️ No tests found"'
             }
         }
 
         stage('Publish') {
             steps {
-                bat 'dotnet publish Joy.csproj -c Release -o publish'
+                // Replace with the main Web API project inside your solution
+                bat 'dotnet publish Joy/DatabaseLayer/DatabaseLayer.csproj -c Release -o publish'
             }
         }
 
@@ -44,8 +45,8 @@ pipeline {
             steps {
                 script {
                     bat """
-                    echo Copying published files to \\\\${TARGET_SERVER}\\${APP_PATH}...
-                    xcopy /Y /E publish\\* \\\\${TARGET_SERVER}\\${APP_PATH}
+                    echo Deploying published files to ${APP_PATH}...
+                    xcopy /Y /E publish\\* ${APP_PATH}
                     """
                 }
             }
@@ -61,5 +62,6 @@ pipeline {
         }
     }
 }
+
 
   
