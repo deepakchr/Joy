@@ -3,10 +3,11 @@ pipeline {
 
     environment {
         TARGET_SERVER = "localhost"                     // Change if deploying to a remote server
-        APP_PATH = "C:\\Applications\\ADAFSAAPI"       // Deployment folder
+        APP_PATH = "C:\\Applications\\ADAFSAAPI"       // Deployment folder on the target server
     }
 
     stages {
+        // Stage 1: Checkout code from GitHub
         stage('Checkout') {
             steps {
                 git branch: 'main',
@@ -15,31 +16,36 @@ pipeline {
             }
         }
 
+        // Stage 2: Restore NuGet packages
         stage('Restore') {
             steps {
                 bat 'dotnet restore AdfsaLabAPI.sln'
             }
         }
 
+        // Stage 3: Build the solution
         stage('Build') {
             steps {
                 bat 'dotnet build AdfsaLabAPI.sln -c Release'
             }
         }
 
+        // Stage 4: Run tests
         stage('Test') {
             steps {
                 bat 'dotnet test AdfsaLabAPI.sln --no-build || echo "⚠️ No tests found"'
             }
         }
 
+        // Stage 5: Publish the main project
         stage('Publish') {
             steps {
-                // Replace with the main Web API project inside your solution
+                // Replace with your main Web API project inside the solution
                 bat 'dotnet publish Joy/DatabaseLayer/DatabaseLayer.csproj -c Release -o publish'
             }
         }
 
+        // Stage 6: Deploy published files to target server
         stage('Deploy') {
             steps {
                 script {
@@ -52,6 +58,7 @@ pipeline {
         }
     }
 
+    // Post-build notifications
     post {
         success {
             echo "✅ Build & Deployment successful!"
@@ -61,6 +68,3 @@ pipeline {
         }
     }
 }
-
-
-  
