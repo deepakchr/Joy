@@ -2,69 +2,66 @@ pipeline {
     agent any
 
     environment {
-        TARGET_SERVER = "localhost"                     // Change if deploying to a remote server
-        APP_PATH = "C:\\Applications\\ADAFSAAPI"       // Deployment folder on the target server
+        SOLUTION_NAME = 'AdfsaLabAPI.sln'
+        PROJECT_DIR = 'AdfsaLabAPI'
+        BUILD_CONFIG = 'Release'
+        DEPLOY_PATH = 'C:\\inetpub\\wwwroot\\AdfsaLabAPI'
+        MSBUILD_PATH = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe'
+        NUGET_PATH = 'C:\\Tools\\nuget\\nuget.exe' // path to nuget.exe
+        IIS_EXPRESS_PATH = 'C:\\Program Files\\IIS Express\\iisexpress.exe'
+        PORT = '8081'
     }
 
     stages {
-        // Stage 1: Checkout code from GitHub
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                    credentialsId: 'github-creds',       // Jenkins credential ID for GitHub
                     url: 'https://github.com/deepakchr/Joy.git'
             }
         }
 
-        // Stage 2: Restore NuGet packages
-        stage('Restore') {
+        stage('Restore NuGet Packages') {
             steps {
-                bat 'dotnet restore AdfsaLabAPI.sln'
+                bat "\"${env.NUGET_PATH}\" restore ${env.SOLUTION_NAME}"
             }
         }
 
-        // Stage 3: Build the solution
-        stage('Build') {
+        stage('Build Solution') {
             steps {
-                bat 'dotnet build AdfsaLabAPI.sln -c Release'
+                bat "\"${env.MSBUILD_PATH}\" ${env.SOLUTION_NAME} /p:Configuration=${env.BUILD_CONFIG} /p:Platform=\"Any CPU\" /t:Rebuild"
             }
         }
 
-        // Stage 4: Run tests
-        stage('Test') {
-            steps {
-                bat 'dotnet test AdfsaLabAPI.sln --no-build || echo "⚠️ No tests found"'
-            }
-        }
-
-        // Stage 5: Publish the main project
-        stage('Publish') {
-            steps {
-                // Replace with your main Web API project inside the solution
-                bat 'dotnet publish Joy/DatabaseLayer/DatabaseLayer.csproj -c Release -o publish'
-            }
-        }
-
-        // Stage 6: Deploy published files to target server
         stage('Deploy') {
             steps {
-                script {
-                    bat """
-                    echo Deploying published files to ${APP_PATH}...
-                    xcopy /Y /E publish\\* ${APP_PATH}
-                    """
-                }
+                bat """
+                if not exist ${env.DEPLOY_PATH} mkdir ${env.DEPLOY_PATH}
+                xcopy /E /I /Y \"${env.WORKSPACE}\\${env.PROJECT_DIR}\\bin\\${env.BUILD_CONFIG}\\*\" \"${env.DEPLOY_PATH}\\\"
+                """
             }
         }
-    }
 
-    // Post-build notifications
-    post {
-        success {
-            echo "✅ Build & Deployment successful!"
+        stage('Run with IIS Express') {
+            steps {
+                bat "\"${env.IIS_EXPRESS_PATH}\" /path:\"${env.DEPLOY_PATH}\" /port:${env.PORT} /clr:v4.0"
+            }
         }
-        failure {
-            echo "❌ Build or Deployment failed!"
+
+        stage('Test Application') {
+            steps {
+                powershell '''
+                try {
+                    $response = Invoke-WebRequest -Uri http://localhost:8080 -UseBasicParsing
+                    if ($response.StatusCode -eq 200) {
+                        Write-Output "Application deployed and running successfully!"
+                    } else {
+                        throw "Deployment failed: HTTP status $($response.StatusCode)"
+                    }
+                } catch {
+                    throw "Site is not accessible: $_"
+                }
+                '''
+            }
         }
     }
 }
