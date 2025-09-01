@@ -28,9 +28,7 @@ pipeline {
 
         stage('Build Solution') {
             steps {
-                bat """
-                \"${env.MSBUILD_PATH}\" ${env.SOLUTION_NAME} /p:Configuration=${env.BUILD_CONFIG} /p:Platform="Any CPU" /t:Rebuild /v:m /p:ErrorReport=prompt
-                """
+                bat "\"${env.MSBUILD_PATH}\" ${env.SOLUTION_NAME} /p:Configuration=${env.BUILD_CONFIG} /p:Platform=\"Any CPU\" /t:Rebuild /v:m /p:ErrorReport=prompt"
             }
         }
 
@@ -45,9 +43,7 @@ pipeline {
 
         stage('Run with IIS Express') {
             steps {
-                // Start IIS Express in background
                 bat "start \"IIS Express\" \"${env.IIS_EXPRESS_PATH}\" /path:\"${env.DEPLOY_PATH}\" /port:${env.PORT} /clr:v4.0"
-                // Give IIS Express time to start
                 sleep 5
             }
         }
@@ -83,3 +79,16 @@ pipeline {
         always {
             echo 'Cleaning up IIS Express...'
             bat """
+            tasklist /FI "IMAGENAME eq iisexpress.exe" | findstr iisexpress.exe >nul
+            if %ERRORLEVEL%==0 taskkill /IM iisexpress.exe /F
+            """
+        }
+        success {
+            echo 'Build, deploy, and test completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check build logs for details.'
+        }
+    }
+}
+
