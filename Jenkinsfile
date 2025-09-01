@@ -7,7 +7,7 @@ pipeline {
         BUILD_CONFIG = 'Release'
         DEPLOY_PATH = 'C:\\inetpub\\wwwroot\\AdfsaLabAPI'
         MSBUILD_PATH = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe'
-        NUGET_PATH = 'C:\\Tools\\nuget\\nuget.exe' // path to nuget.exe
+        NUGET_PATH = 'C:\\Tools\\nuget\\nuget.exe'
         IIS_EXPRESS_PATH = 'C:\\Program Files\\IIS Express\\iisexpress.exe'
         PORT = '8081'
     }
@@ -22,20 +22,22 @@ pipeline {
 
         stage('Restore NuGet Packages') {
             steps {
-                bat "\"${env.NUGET_PATH}\" restore ${env.SOLUTION_NAME}"
+                bat "\"${env.NUGET_PATH}\" restore ${env.SOLUTION_NAME} -NonInteractive -Verbosity detailed"
             }
         }
 
         stage('Build Solution') {
             steps {
-                bat "\"${env.MSBUILD_PATH}\" ${env.SOLUTION_NAME} /p:Configuration=${env.BUILD_CONFIG} /p:Platform=\"Any CPU\" /t:Rebuild"
+                bat """
+                \"${env.MSBUILD_PATH}\" ${env.SOLUTION_NAME} /p:Configuration=${env.BUILD_CONFIG} /p:Platform=\"Any CPU\" /t:Rebuild /v:m /p:ErrorReport=prompt
+                """
             }
         }
 
         stage('Deploy') {
             steps {
                 bat """
-                if not exist ${env.DEPLOY_PATH} mkdir ${env.DEPLOY_PATH}
+                if not exist \"${env.DEPLOY_PATH}\" mkdir \"${env.DEPLOY_PATH}\"
                 xcopy /E /I /Y \"${env.WORKSPACE}\\${env.PROJECT_DIR}\\bin\\${env.BUILD_CONFIG}\\*\" \"${env.DEPLOY_PATH}\\\"
                 """
             }
@@ -43,25 +45,50 @@ pipeline {
 
         stage('Run with IIS Express') {
             steps {
-                bat "\"${env.IIS_EXPRESS_PATH}\" /path:\"${env.DEPLOY_PATH}\" /port:${env.PORT} /clr:v4.0"
+                // Run IIS Express in background so pipeline continues
+                bat "start \"IIS Express\" \"${env.IIS_EXPRESS_PATH}\" /path:\"${env.DEPLOY_PATH}\" /port:${env.PORT} /clr:v4.0"
+                // Optional: wait a few seconds to allow IIS Express to start
+                sleep 5
             }
         }
 
         stage('Test Application') {
             steps {
                 powershell '''
-                try {
-                    $response = Invoke-WebRequest -Uri http://localhost:8080 -UseBasicParsing
-                    if ($response.StatusCode -eq 200) {
-                        Write-Output "Application deployed and running successfully!"
-                    } else {
-                        throw "Deployment failed: HTTP status $($response.StatusCode)"
+                $maxRetries = 5
+                $retry = 0
+                $success = $false
+                while (-not $success -and $retry -lt $maxRetries) {
+                    try {
+                        $response = Invoke-WebRequest -Uri http://localhost:$env:PORT -UseBasicParsing
+                        if ($response.StatusCode -eq 200) {
+                            Write-Output "Application deployed and running successfully!"
+                            $success = $true
+                        } else {
+                            throw "HTTP status $($response.StatusCode)"
+                        }
+                    } catch {
+                        Write-Output "Waiting for IIS Express to start..."
+                        Start-Sleep -Seconds 5
+                        $retry++
                     }
-                } catch {
-                    throw "Site is not accessible: $_"
                 }
+                if (-not $success) { throw "Site is not accessible after $maxRetries attempts" }
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up IIS Express...'
+            bat 'taskkill /IM iisexpress.exe /F || echo IIS Express not running'
+        }
+        success {
+            echo 'Build, deploy, and test completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check build logs for details.'
         }
     }
 }
