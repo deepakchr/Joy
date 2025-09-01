@@ -29,7 +29,7 @@ pipeline {
         stage('Build Solution') {
             steps {
                 bat """
-                \"${env.MSBUILD_PATH}\" ${env.SOLUTION_NAME} /p:Configuration=${env.BUILD_CONFIG} /p:Platform=\"Any CPU\" /t:Rebuild /v:m /p:ErrorReport=prompt
+                \"${env.MSBUILD_PATH}\" ${env.SOLUTION_NAME} /p:Configuration=${env.BUILD_CONFIG} /p:Platform="Any CPU" /t:Rebuild /v:m /p:ErrorReport=prompt
                 """
             }
         }
@@ -38,16 +38,16 @@ pipeline {
             steps {
                 bat """
                 if not exist \"${env.DEPLOY_PATH}\" mkdir \"${env.DEPLOY_PATH}\"
-                xcopy /E /I /Y \"${env.WORKSPACE}\\${env.PROJECT_DIR}\\bin\\${env.BUILD_CONFIG}\\*\" \"${env.DEPLOY_PATH}\\\"
+                robocopy \"${env.WORKSPACE}\\${env.PROJECT_DIR}\\bin\\${env.BUILD_CONFIG}\" \"${env.DEPLOY_PATH}\" *.* /E /NFL /NDL /NJH /NJS /NC /NS
                 """
             }
         }
 
         stage('Run with IIS Express') {
             steps {
-                // Run IIS Express in background so pipeline continues
+                // Start IIS Express in background
                 bat "start \"IIS Express\" \"${env.IIS_EXPRESS_PATH}\" /path:\"${env.DEPLOY_PATH}\" /port:${env.PORT} /clr:v4.0"
-                // Optional: wait a few seconds to allow IIS Express to start
+                // Give IIS Express time to start
                 sleep 5
             }
         }
@@ -82,13 +82,4 @@ pipeline {
     post {
         always {
             echo 'Cleaning up IIS Express...'
-            bat 'taskkill /IM iisexpress.exe /F || echo IIS Express not running'
-        }
-        success {
-            echo 'Build, deploy, and test completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed. Check build logs for details.'
-        }
-    }
-}
+            bat """
